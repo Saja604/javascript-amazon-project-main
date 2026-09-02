@@ -90,11 +90,11 @@ export function renderCart(){
 
     document.querySelectorAll('.delete-quantity-link').forEach((deleteButton) =>{
         deleteButton.addEventListener('click', () =>{
-            // const deleteID=deleteButton.dataset.deleteID;
-            // cartItems.splice(index, 1);
+            console.log(`cart before delete: ${localStorage.getItem('cartItems')}`);
             const deleteId=deleteButton.dataset.id;
             let cartItems2=cartItems.filter(item => item.productId!==deleteId);
             localStorage.setItem('cartItems', JSON.stringify(cartItems2));
+            console.log(`cart after delete: ${localStorage.getItem('cartItems')}`);
             renderCart();
         });
     }); 
