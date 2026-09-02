@@ -1,9 +1,13 @@
-import { calcQuantity } from "./amazon.js";
+import { calcQuantity, loadFromStorage, cartItems } from "./amazon.js";
 import { products } from "../data/products.js";
 import { deliveryOptions } from "./deliveryOptions.js";
 
-export function renderOrderSummary(cartItems){
+export function renderOrderSummary(){
+    loadFromStorage();
+    console.log(localStorage.getItem('cartItems'));
+
     const cartQuantity=calcQuantity();
+    console.log(cartQuantity);
     document.querySelector('.items-quantity').innerHTML=`Items (${cartQuantity}):`;
 
     let itemsPrice=0;

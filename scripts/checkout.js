@@ -1,19 +1,22 @@
-let cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+// let cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
 
 import { products } from "../data/products.js";
 import {deliveryOptions} from "./deliveryOptions.js";
 import dayjs from "https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js";
 import { renderOrderSummary } from "./orderSummary.js";
-import { calcQuantity } from "./amazon.js";
+import { calcQuantity, loadFromStorage, cartItems } from "./amazon.js";
 
 renderCart();
 console.log(cartItems);
 
-function renderCart(){
+export function renderCart(){
+    loadFromStorage();
+    console.log(localStorage.getItem('cartItems'));
+
     const cartQuantity=calcQuantity();
     document.querySelector('.return-to-home-link').innerHTML=cartQuantity;
 
-    renderOrderSummary(cartItems);
+    // renderOrderSummary();
 
     let cartList='';
     cartItems.forEach((item, index) =>{
@@ -37,7 +40,7 @@ function renderCart(){
                     <div class="product-price">
                         $ ${(product.priceCents/100).toFixed(2)}
                     </div>
-                    <div class="product-quantity">
+                    <div class="product-quantity js-product-quantity-${product.id}">
                         <span>
                         Quantity: <span class="quantity-label">${item.quantity}</span>
                         </span>
@@ -90,8 +93,8 @@ function renderCart(){
             // const deleteID=deleteButton.dataset.deleteID;
             // cartItems.splice(index, 1);
             const deleteId=deleteButton.dataset.id;
-            cartItems=cartItems.filter(item => item.productId!==deleteId);
-            localStorage.setItem('cartItems', JSON.stringify(cartItems));
+            let cartItems2=cartItems.filter(item => item.productId!==deleteId);
+            localStorage.setItem('cartItems', JSON.stringify(cartItems2));
             renderCart();
         });
     }); 

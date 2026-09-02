@@ -97,6 +97,7 @@ export function addToCart(pId){
 }
 
 export function calcQuantity(){
+  console.log('cartItems inside calcQuantity:', cartItems);
     let cartQuantity=0;
         cartItems.forEach((item) =>{
             cartQuantity+=item.quantity;
