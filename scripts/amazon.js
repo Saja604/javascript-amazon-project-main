@@ -1,14 +1,13 @@
 import {products} from '../data/products.js';
+import {cartItems, loadFromStorage, saveToStorage, addToCart} from './cart.js';
 
 if (document.querySelector('.products-grid')) {
     renderProducts();
 }
-export let cartItems;
-loadFromStorage();
-export function loadFromStorage(){
-  cartItems=JSON.parse(localStorage.getItem('cartItems')) || [];
-}
 
+loadFromStorage();
+
+console.log('cartItems after loadFromStorage:', cartItems);
 function renderProducts(){
     let htmlList= '';
     products.forEach((product) => {
@@ -80,21 +79,6 @@ document.querySelectorAll('.add-to-cart-button').forEach((addButton, index) => {
         document.querySelector('.cart-quantity').innerHTML=cartQuantity;
     })
 });
-
-export function addToCart(pId){
-  const matchingItem = cartItems.find((item) => {
-      return item.productId === pId;
-  });
-  
-  if(matchingItem){
-      matchingItem.quantity+=1;
-  }
-  else{
-      cartItems.push({productId: pId, quantity: 1, deliveryOptionId: '1'});
-  }
-  
-  localStorage.setItem('cartItems', JSON.stringify(cartItems));
-}
 
 export function calcQuantity(){
   console.log('cartItems inside calcQuantity:', cartItems);

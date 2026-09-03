@@ -1,6 +1,7 @@
-import { calcQuantity, loadFromStorage, cartItems } from "./amazon.js";
+import { calcQuantity } from "./amazon.js";
 import { products } from "../data/products.js";
 import { deliveryOptions } from "./deliveryOptions.js";
+import {cartItems, loadFromStorage} from "./cart.js";
 
 export function renderOrderSummary(){
     loadFromStorage();

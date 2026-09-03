@@ -4,7 +4,8 @@ import { products } from "../data/products.js";
 import {deliveryOptions} from "./deliveryOptions.js";
 import dayjs from "https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js";
 import { renderOrderSummary } from "./orderSummary.js";
-import { calcQuantity, loadFromStorage, cartItems } from "./amazon.js";
+import { calcQuantity } from "./amazon.js";
+import { cartItems, updateDeliveryOption, loadFromStorage, removeFromCart, saveToStorage } from "./cart.js";
 
 renderCart();
 console.log(cartItems);
@@ -16,7 +17,7 @@ export function renderCart(){
     const cartQuantity=calcQuantity();
     document.querySelector('.return-to-home-link').innerHTML=cartQuantity;
 
-    // renderOrderSummary();
+    renderOrderSummary();
 
     let cartList='';
     cartItems.forEach((item, index) =>{
@@ -26,7 +27,7 @@ export function renderCart(){
         cartList+=`
             <div class="cart-item-container">
                 <div class="delivery-date">
-                    Delivery date: Tuesday, June 21
+                    Delivery date: ${showDeliveryDate(item.deliveryOptionId)}
                 </div>
 
                 <div class="cart-item-details-grid">
@@ -74,13 +75,10 @@ export function renderCart(){
 
                 console.log('Searching for ID:', 
                 deliveryOption.dataset.productId);
+
+                const deliveryOptionId=deliveryOption.dataset.deliveryId;
                 
-                const matchingItem = cartItems.find((item) => {
-                    return item.productId === deliveryOption.dataset.productId;
-                });
-                console.log(matchingItem);
-                matchingItem.deliveryOptionId= deliveryOption.dataset.deliveryId;
-                localStorage.setItem('cartItems', JSON.stringify(cartItems));
+                updateDeliveryOption(deliveryOption.dataset.productId, deliveryOptionId); 
 
                 renderOrderSummary(cartItems)
             });
@@ -90,11 +88,11 @@ export function renderCart(){
 
     document.querySelectorAll('.delete-quantity-link').forEach((deleteButton) =>{
         deleteButton.addEventListener('click', () =>{
-            console.log(`cart before delete: ${localStorage.getItem('cartItems')}`);
+            // console.log(`cart before delete: ${localStorage.getItem('cartItems')}`);
             const deleteId=deleteButton.dataset.id;
-            let cartItems2=cartItems.filter(item => item.productId!==deleteId);
-            localStorage.setItem('cartItems', JSON.stringify(cartItems2));
-            console.log(`cart after delete: ${localStorage.getItem('cartItems')}`);
+            removeFromCart(deleteId);
+            
+            // console.log(`cart after delete: ${localStorage.getItem('cartItems')}`);
             renderCart();
         });
     }); 
@@ -138,4 +136,13 @@ function deliveryOptionFunction (index){
         `
     });
     return html;
+}
+function showDeliveryDate(deliveryOptionId){
+    const dOption=deliveryOptions.find((option) => {
+        return option.id===deliveryOptionId;
+    })
+    const today=dayjs();
+    const deliveryDate=today.add(dOption.deliveryDays, 'days');
+    const deliveryDateFormat=deliveryDate.format('dddd, MMMM D');
+    return deliveryDateFormat;
 }

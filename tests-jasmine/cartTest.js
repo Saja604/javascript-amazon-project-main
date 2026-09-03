@@ -1,4 +1,4 @@
-import {addToCart, cartItems, loadFromStorage} from '../scripts/amazon.js';
+import {addToCart, cartItems, loadFromStorage} from '../scripts/cart.js';
 
 describe('test suite: addToCart', () => {
     it('adds an existing product to the cart', () => {

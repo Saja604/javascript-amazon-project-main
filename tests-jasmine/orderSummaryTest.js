@@ -1,5 +1,5 @@
 import {renderOrderSummary} from '../scripts/orderSummary.js'
-import {loadFromStorage, cartItems} from '../scripts/amazon.js';
+import {loadFromStorage, cartItems} from '../scripts/cart.js';
 import {renderCart} from '../scripts/checkout.js';
 
 // since we are doing the same setup for each test, we can use hook
