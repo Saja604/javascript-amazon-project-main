@@ -1,6 +1,8 @@
-import {products} from '../data/products.js';
+import {products, loadProducts} from '../data/products.js';
 import {cartItems, loadFromStorage, saveToStorage, addToCart} from './cart.js';
-import {formatCurrency} from './money.js';
+// import {formatCurrency} from './money.js';
+
+loadProducts(renderProducts);
 
 if (document.querySelector('.products-grid')) {
     renderProducts();
@@ -49,8 +51,8 @@ function renderProducts(){
               <option value="10">10</option>
             </select>
           </div>
-          
-          // polymorphism: calling a function without knowing the class, instead of using if statement
+
+          <!-- polymorphism: calling a function without knowing the class, instead of using if statement -->
           <div>
             ${product.extraInfoHTML()}
           </div>

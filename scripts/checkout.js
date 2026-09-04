@@ -1,15 +1,17 @@
 // let cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
 
-import { products } from "../data/products.js";
+import { products, loadProducts } from "../data/products.js";
 import {deliveryOptions} from "./deliveryOptions.js";
 import dayjs from "https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js";
 import { renderOrderSummary } from "./orderSummary.js";
 import { calcQuantity } from "./amazon.js";
 import { cartItems, updateDeliveryOption, loadFromStorage, removeFromCart, saveToStorage } from "./cart.js";
 // import './cart-class.js'; 
-import '../data/backend-practice.js';
+// import '../data/backend-practice.js';
 
-renderCart();
+loadProducts(renderCart);
+
+// renderCart();
 console.log(cartItems);
 
 export function renderCart(){
