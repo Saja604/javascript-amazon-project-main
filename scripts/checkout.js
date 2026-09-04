@@ -6,7 +6,8 @@ import dayjs from "https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js";
 import { renderOrderSummary } from "./orderSummary.js";
 import { calcQuantity } from "./amazon.js";
 import { cartItems, updateDeliveryOption, loadFromStorage, removeFromCart, saveToStorage } from "./cart.js";
-import './cart-class.js'; 
+// import './cart-class.js'; 
+import '../data/backend-practice.js';
 
 renderCart();
 console.log(cartItems);
