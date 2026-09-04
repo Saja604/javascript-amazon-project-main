@@ -49,6 +49,11 @@ function renderProducts(){
               <option value="10">10</option>
             </select>
           </div>
+          
+          // polymorphism: calling a function without knowing the class, instead of using if statement
+          <div>
+            ${product.extraInfoHTML()}
+          </div>
 
           <div class="product-spacer"></div>
 
