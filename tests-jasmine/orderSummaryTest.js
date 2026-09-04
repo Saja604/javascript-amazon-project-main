@@ -37,7 +37,7 @@ import {renderCart} from '../scripts/checkout.js';
 // });
 describe ('test render Cart', () => {
     const id1='8c9c52b5-5a19-4bcb-a5d1-158a74287c53';
-     const id2='dd82ca78-a18b-4e2a-9250-31e67412f98d';
+    const id2='dd82ca78-a18b-4e2a-9250-31e67412f98d';
     const id3= '36c64692-677f-4f58-b5ec-0dc2cf109e27';
 
     beforeEach(() => {
