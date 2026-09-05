@@ -59,9 +59,7 @@ export function loadProducts(functionToCallAfterLoad){
       return new Product(productDetails);
     });
     console.log('load products');
-    if (document.querySelector('.products-grid')) {
-      functionToCallAfterLoad();
-    }
+    functionToCallAfterLoad();
   });
   xhr.open('GET', 'https://supersimplebackend.dev/products');
   xhr.send();

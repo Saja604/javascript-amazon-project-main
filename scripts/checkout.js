@@ -9,7 +9,11 @@ import { cartItems, updateDeliveryOption, loadFromStorage, removeFromCart, saveT
 // import './cart-class.js'; 
 // import '../data/backend-practice.js';
 
-loadProducts(renderCart);
+loadProducts(() => {
+    if (document.querySelector('.order-summary')) {
+        renderCart();
+    }
+});
 
 // renderCart();
 console.log(cartItems);
@@ -21,7 +25,7 @@ export function renderCart(){
     const cartQuantity=calcQuantity();
     document.querySelector('.return-to-home-link').innerHTML=cartQuantity;
 
-    renderOrderSummary();
+    // renderOrderSummary();
 
     let cartList='';
     cartItems.forEach((item, index) =>{

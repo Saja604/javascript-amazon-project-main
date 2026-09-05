@@ -1,8 +1,10 @@
 import {renderOrderSummary} from '../scripts/orderSummary.js'
 import {loadFromStorage, cartItems} from '../scripts/cart.js';
 import {renderCart} from '../scripts/checkout.js';
+import { loadProducts } from '../data/products.js';
 
 // since we are doing the same setup for each test, we can use hook
+
 // describe('test suite: renderOrderSummary', () => {
 //     it('displays the cart', () => {
 //         document.querySelector('.js-test-container').innerHTML=`
@@ -40,6 +42,12 @@ describe ('test render Cart', () => {
     const id2='dd82ca78-a18b-4e2a-9250-31e67412f98d';
     const id3= '36c64692-677f-4f58-b5ec-0dc2cf109e27';
 
+    beforeAll((done) => {
+        loadProducts(() => {
+            done();
+        });
+    });
+    
     beforeEach(() => {
         let fakeCart=[{productId: id1,
                 quantity:3,

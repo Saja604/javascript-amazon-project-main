@@ -2,7 +2,11 @@ import {products, loadProducts} from '../data/products.js';
 import {cartItems, loadFromStorage, saveToStorage, addToCart} from './cart.js';
 // import {formatCurrency} from './money.js';
 
-loadProducts(renderProducts);
+loadProducts(() => {
+  if (document.querySelector('.products-grid')) {
+    renderProducts();
+  }
+});
 
 if (document.querySelector('.products-grid')) {
     renderProducts();
@@ -77,6 +81,7 @@ function renderProducts(){
 
 document.querySelectorAll('.add-to-cart-button').forEach((addButton, index) => { 
     addButton.addEventListener('click', () =>{
+        console.log(cartItems);
         const addedItem=products[index];
         
         addToCart(addedItem.id);

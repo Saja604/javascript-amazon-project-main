@@ -26,6 +26,7 @@ class Cart {
   };
 
   addToCart(pId){
+    console.log('addToCart called with pId:', pId);
     const matchingItem = this.cartItems.find((item) => {
         return item.productId === pId;
     });
