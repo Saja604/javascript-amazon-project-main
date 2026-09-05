@@ -1,20 +1,17 @@
 // let cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
 
-import { products, loadProducts } from "../data/products.js";
+import { products, loadProducts, loadProductsFetch } from "../data/products.js";
 import {deliveryOptions} from "./deliveryOptions.js";
 import dayjs from "https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js";
 import { renderOrderSummary } from "./orderSummary.js";
 import { calcQuantity } from "./amazon.js";
 import { cartItems, updateDeliveryOption, loadFromStorage, removeFromCart, saveToStorage, loadCart } from "./cart.js";
+import '../data/products.js'
 // import './cart-class.js'; 
 // import '../data/backend-practice.js';
 
 Promise.all([
-   new Promise((resolve) => {
-        loadProducts(() => {
-            resolve('we can use this in then');
-        });
-    }), 
+   loadProductsFetch(),
     new Promise((resolve) => {
         loadCart(() => {
             resolve('value2');

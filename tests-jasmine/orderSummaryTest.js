@@ -1,51 +1,19 @@
 import {renderOrderSummary} from '../scripts/orderSummary.js'
 import {loadFromStorage, cartItems} from '../scripts/cart.js';
 import {renderCart} from '../scripts/checkout.js';
-import { loadProducts } from '../data/products.js';
+import { loadProducts, loadProductsFetch } from '../data/products.js';
 
 // since we are doing the same setup for each test, we can use hook
 
-// describe('test suite: renderOrderSummary', () => {
-//     it('displays the cart', () => {
-//         document.querySelector('.js-test-container').innerHTML=`
-//             <div class="items-quantity"></div>
-//             <div class="js-items-price"></div>
-//             <div class="js-shipping-price"></div>
-//             <div class="js-before-tax"></div>
-//             <div class="js-estimated-tax"></div>
-//             <div class="js-order-total"></div>   
-//         `;
-//     spyOn(localStorage, 'setItem');
-
-//     spyOn(localStorage, 'getItem').and.callFake(() => {
-//         return JSON.stringify([
-//             {productId: '8c9c52b5-5a19-4bcb-a5d1-158a74287c53',
-//             quantity:1,
-//             deliveryOptionId: '1'},
-//             {
-//             productId: 'dd82ca78-a18b-4e2a-9250-31e67412f98d',
-//             quantity: 1,
-//             deliveryOptionId: '1'
-//             }
-//         ]);
-//         });
-//     loadFromStorage();
-//     console.log(localStorage.getItem('cartItems'));
-
-    
-//     renderOrderSummary();
-
-//     });
-// });
 describe ('test render Cart', () => {
     const id1='8c9c52b5-5a19-4bcb-a5d1-158a74287c53';
     const id2='dd82ca78-a18b-4e2a-9250-31e67412f98d';
     const id3= '36c64692-677f-4f58-b5ec-0dc2cf109e27';
 
     beforeAll((done) => {
-        loadProducts(() => {
+        loadProductsFetch().then(() => {
             done();
-        });
+        })
     });
     
     beforeEach(() => {
