@@ -5,15 +5,48 @@ import {deliveryOptions} from "./deliveryOptions.js";
 import dayjs from "https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js";
 import { renderOrderSummary } from "./orderSummary.js";
 import { calcQuantity } from "./amazon.js";
-import { cartItems, updateDeliveryOption, loadFromStorage, removeFromCart, saveToStorage } from "./cart.js";
+import { cartItems, updateDeliveryOption, loadFromStorage, removeFromCart, saveToStorage, loadCart } from "./cart.js";
 // import './cart-class.js'; 
 // import '../data/backend-practice.js';
 
-loadProducts(() => {
-    if (document.querySelector('.order-summary')) {
-        renderCart();
-    }
+Promise.all([
+   new Promise((resolve) => {
+        loadProducts(() => {
+            resolve('we can use this in then');
+        });
+    }), 
+    new Promise((resolve) => {
+        loadCart(() => {
+            resolve('value2');
+        });
+    })
+]).then((values) => {
+    console.log(values);
+    renderCart();
 });
+// new Promise((resolve) => {
+//     loadProducts(() => {
+//         resolve('we can use this in then');
+//     });
+// }).then((value) => {
+//     console.log(value);
+//     return new Promise((resolve) => {
+//         loadCart(() => {
+//             resolve();
+//         });
+//     }); 
+// }).then (() => {
+//     renderCart()
+// });
+
+// multiple callbacks cause a lot of nesting, promises solve this problem.
+// loadProducts(() => {
+//     loadCart(() => {
+//         if (document.querySelector('.order-summary')) {
+//             renderCart();
+//         }
+//     });
+// });
 
 // renderCart();
 console.log(cartItems);
@@ -25,7 +58,7 @@ export function renderCart(){
     const cartQuantity=calcQuantity();
     document.querySelector('.return-to-home-link').innerHTML=cartQuantity;
 
-    // renderOrderSummary();
+    renderOrderSummary();
 
     let cartList='';
     cartItems.forEach((item, index) =>{

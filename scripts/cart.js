@@ -36,3 +36,14 @@ export function removeFromCart(pId){
   cartItems=cartItems2;
   localStorage.setItem('cartItems', JSON.stringify(cartItems2));
 }
+
+export function loadCart(functionToCallAfterLoad){ 
+  const xhr = new XMLHttpRequest();
+
+  xhr.addEventListener('load', () => {
+    console.log(xhr.response);
+    functionToCallAfterLoad();
+  });
+  xhr.open('GET', 'https://supersimplebackend.dev/cart');
+  xhr.send();
+}

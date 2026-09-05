@@ -9,8 +9,7 @@ export function renderOrderSummary(){
 
     const cartQuantity=calcQuantity();
     console.log(cartQuantity);
-    document.querySelector('.items-quantity').innerHTML=`Items (${cartQuantity}):`;
-
+    
     let itemsPrice=0;
     let shippingPrice=0;
     cartItems.forEach(item => {
@@ -25,15 +24,44 @@ export function renderOrderSummary(){
                 });
         shippingPrice+=deliveryOption.priceCents;
     });
-    document.querySelector('.js-items-price').innerHTML=`$ ${(itemsPrice/100).toFixed(2)}`;
-    document.querySelector('.js-shipping-price').innerHTML=`$ ${(shippingPrice/100).toFixed(2)}`;
-
     const totalBeforeTax=itemsPrice+shippingPrice;
     const estimatedTax=totalBeforeTax*0.1;
-
-    document.querySelector('.js-before-tax').innerHTML=`$ ${(totalBeforeTax/100).toFixed(2)}`;
-    document.querySelector('.js-estimated-tax').innerHTML=`$ ${(estimatedTax/100).toFixed(2)}`;
-    
+ 
     const orderTotal=totalBeforeTax+estimatedTax;
-    document.querySelector('.js-order-total').innerHTML=`$ ${(orderTotal/100).toFixed(2)}`;
+    
+    const html=`
+    <div class="payment-summary-title">
+            Order Summary
+          </div>
+
+          <div class="payment-summary-row">
+            <div class="items-quantity">Items (${cartQuantity}):</div>
+            <div class="payment-summary-money js-items-price">$ ${(itemsPrice/100).toFixed(2)}</div>
+          </div>
+
+          <div class="payment-summary-row">
+            <div>Shipping &amp; handling:</div>
+            <div class="payment-summary-money js-shipping-price">$ ${(shippingPrice/100).toFixed(2)}</div>
+          </div>
+
+          <div class="payment-summary-row subtotal-row">
+            <div>Total before tax:</div>
+            <div class="payment-summary-money js-before-tax">$ ${(totalBeforeTax/100).toFixed(2)}</div>
+          </div>
+
+          <div class="payment-summary-row">
+            <div>Estimated tax (10%):</div>
+            <div class="payment-summary-money js-estimated-tax">$ ${(estimatedTax/100).toFixed(2)}</div>
+          </div>
+
+          <div class="payment-summary-row total-row">
+            <div>Order total:</div>
+            <div class="payment-summary-money js-order-total">$ ${(orderTotal/100).toFixed(2)}</div>
+          </div>
+
+          <button class="place-order-button button-primary">
+            Place your order
+          </button>
+    `
+    document.querySelector('.payment-summary').innerHTML=html;
 }
