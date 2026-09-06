@@ -11,12 +11,19 @@ import '../data/products.js'
 // import '../data/backend-practice.js';
 
 async function loadPage(){
-    await loadProductsFetch();
-    const value2 = await new Promise((resolve) => {
+    try{
+        await loadProductsFetch();
+        const value2 = await new Promise((resolve, reject) => {
+        // throw 'error1';
         loadCart(() => {
+            // reject('error3');
             resolve('value2');
         });
     });
+    } catch (error) {
+        console.log('unexpected error. Please try again later');
+    }
+    
     renderCart();
     // return 'value2';
 }
@@ -24,7 +31,7 @@ loadPage()
 // .then((value) => {
 //     console.log('next step');
 //     console.log(value);
-// })
+// }) 
 
 // Promise.all([
 //    loadProductsFetch(),
