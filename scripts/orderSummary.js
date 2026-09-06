@@ -2,6 +2,7 @@ import { calcQuantity } from "./amazon.js";
 import { products } from "../data/products.js";
 import { deliveryOptions } from "./deliveryOptions.js";
 import {cartItems, loadFromStorage} from "./cart.js";
+import {addOrder} from '../data/orders.js';
 
 export function renderOrderSummary(){
     loadFromStorage();
@@ -59,9 +60,31 @@ export function renderOrderSummary(){
             <div class="payment-summary-money js-order-total">$ ${(orderTotal/100).toFixed(2)}</div>
           </div>
 
-          <button class="place-order-button button-primary">
+          <button class="place-order-button button-primary js-place-order">
             Place your order
           </button>
     `
     document.querySelector('.payment-summary').innerHTML=html;
+
+    document.querySelector('.js-place-order').addEventListener('click', async () => {
+     // we need to send our cart to the backend in order to create an order
+     try{
+      const response = await fetch('https://supersimplebackend.dev/orders', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          cart: cartItems
+        })
+      });
+      const order = await response.json();
+      addOrder(order);
+     } catch (error) {
+      console.log('unexpeced error. Try again later.')
+     }
+
+     window.location.href = 'orders.html';
+    });  
 }
+
