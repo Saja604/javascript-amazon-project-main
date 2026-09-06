@@ -10,17 +10,34 @@ import '../data/products.js'
 // import './cart-class.js'; 
 // import '../data/backend-practice.js';
 
-Promise.all([
-   loadProductsFetch(),
-    new Promise((resolve) => {
+async function loadPage(){
+    await loadProductsFetch();
+    const value2 = await new Promise((resolve) => {
         loadCart(() => {
             resolve('value2');
         });
-    })
-]).then((values) => {
-    console.log(values);
+    });
     renderCart();
-});
+    // return 'value2';
+}
+loadPage()
+// .then((value) => {
+//     console.log('next step');
+//     console.log(value);
+// })
+
+// Promise.all([
+//    loadProductsFetch(),
+//     new Promise((resolve) => {
+//         loadCart(() => {
+//             resolve('value2');
+//         });
+//     })
+// ]).then((values) => {
+//     console.log(values);
+//     renderCart();
+// });
+
 // new Promise((resolve) => {
 //     loadProducts(() => {
 //         resolve('we can use this in then');

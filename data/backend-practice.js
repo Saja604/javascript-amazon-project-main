@@ -3,15 +3,15 @@
 // save request in a variable
 const xhr =new XMLHttpRequest();
 // we will get one response from the backend, it is called request-response cycle= 1 request, 1 response, we can see it in the netword tab of the browser.
-// to see the response in out project
+// to see the response in our project
 // but it takes time to get the response because of the asynchronous code
 // so in order to wait for the response, we have to set up the event listener before we set up the request.
 xhr.addEventListener('load', () => {
-  console.log(xhr.response);
+  console.log(xhr.response); 
 });
 // set it up to send to the backend, parameters are: type of http message (GET, POST, PUT, DELETE), where to send this HTTP message: to locate another computer on the internet we have to use URL(https://example.com)
 // https: using http
-// s: using secure version og http
+// s: using secure version of  http
 // example.com: domain name, like an address that points to a computer
 xhr.open('GET', 'https://supersimplebackend.dev');
 xhr.send();
