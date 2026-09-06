@@ -2,7 +2,7 @@ import { calcQuantity } from "./amazon.js";
 import { products } from "../data/products.js";
 import { deliveryOptions } from "./deliveryOptions.js";
 import {cartItems, loadFromStorage} from "./cart.js";
-import {addOrder} from '../data/orders.js';
+import {addOrder, orders, loadOrders} from '../data/orders.js';
 
 export function renderOrderSummary(){
     loadFromStorage();
@@ -80,11 +80,12 @@ export function renderOrderSummary(){
       });
       const order = await response.json();
       addOrder(order);
+      // console.log(orders);
      } catch (error) {
       console.log('unexpeced error. Try again later.')
      }
 
      window.location.href = 'orders.html';
+    //  loadOrders();
     });  
 }
-
