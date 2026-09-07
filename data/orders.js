@@ -1,4 +1,5 @@
 import { loadProductsFetch, products } from "./products.js";
+import { formatCurrency } from "../scripts/money.js";
 
 export const orders = JSON.parse(localStorage.getItem('orders')) || [];
 
@@ -21,17 +22,24 @@ loadOrdersPage()
 export function loadOrders(){
   let ordersList=[];
   orders.forEach((order) => {
+    const orderDate = new Date(order.orderTime);
+    const formattedDate = new Intl.DateTimeFormat('en-US', {
+      month: 'long',
+      day: 'numeric',
+      timeZone: 'UTC'
+    }).format(orderDate);
+
     let orderList = `
     <div class="order-container">
       <div class="order-header">
         <div class="order-header-left-section">
           <div class="order-date">
             <div class="order-header-label">Order Placed:</div>
-            <div>${order.orderTime}</div>
+            <div>${formattedDate}</div>
           </div>
           <div class="order-total">
             <div class="order-header-label">Total:</div>
-            <div>$ ${order.totalCostCents}</div>
+            <div>$ ${formatCurrency(order.totalCostCents)}</div>
           </div>
         </div>
 
@@ -39,7 +47,9 @@ export function loadOrders(){
           <div class="order-header-label">Order ID:</div>
           <div>${order.id}</div>
         </div>
-      </div>`
+      </div>
+      <div class="order-details-grid">
+      `
 
     const orderProducts=order.products;
 
@@ -47,9 +57,14 @@ export function loadOrders(){
       const product = products.find((p) => {
         return p.id===orderProduct.productId;
       })
-      console.log(product);
+      const arrivalDate= new Date(orderProduct.estimatedDeliveryTime);
+      const formattedArrivalDate = new Intl.DateTimeFormat ('en-US', {
+        month: 'long',
+        day: 'numeric',
+        timeZone: 'UTC'
+      }).format(arrivalDate);
+
       const html =`
-          <div class="order-details-grid">
             <div class="product-image-container">
               <img src="${product.image}">
             </div>
@@ -59,7 +74,7 @@ export function loadOrders(){
                 ${product.name}
               </div>
               <div class="product-delivery-date">
-                Arriving on: ${orderProduct.estimatedDeliveryTime}
+                Arriving on: ${formattedArrivalDate}
               </div>
               <div class="product-quantity">
                 Quantity: ${orderProduct.quantity}
@@ -77,12 +92,12 @@ export function loadOrders(){
                 </button>
               </a>
             </div>
-          </div>
+          
       `
       orderList+=html;
       
     })
-    orderList+=`</div>`;
+    orderList+=`</div> </div>`;
     ordersList+=orderList;
   })
 
