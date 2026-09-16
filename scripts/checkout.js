@@ -158,6 +158,46 @@ export function renderCart(){
             renderCart();
         });
     }); 
+
+    document.querySelectorAll('.update-quantity-link').forEach((updateButton, index) => {
+        let saveButton = false;
+        updateButton.addEventListener('click', () => {
+            saveButton = !saveButton;
+            // updateButton.innerHTML = saveButton ? 'save' : 'update';
+            const quantityLabel = updateButton.parentElement.querySelector('.quantity-label');
+
+            if(saveButton){
+                updateButton.innerHTML = 'Save';
+
+                let quantityNumber = quantityLabel.innerHTML;
+                const quantity = Number(quantityNumber);
+
+                quantityLabel.innerHTML = `
+                <select>
+                <option ${quantity===1? 'selected' : ''} value="1">1</option>
+                <option ${quantity===2? 'selected' : ''} value="2">2</option>
+                <option ${quantity===3? 'selected' : ''} value="3">3</option>
+                <option ${quantity===4? 'selected' : ''} value="4">4</option>
+                <option ${quantity===5? 'selected' : ''} value="5">5</option>
+                <option ${quantity===6? 'selected' : ''} value="6">6</option>
+                <option ${quantity===7? 'selected' : ''} value="7">7</option>
+                <option${quantity===8? 'selected' : ''} value="8">8</option>
+                <option ${quantity===9? 'selected' : ''} value="9">9</option>
+                <option ${quantity===10? 'selected' : ''} value="10">10</option>
+                </select>
+                `
+            }
+            else {
+                updateButton.innerHTML = 'Update';
+                const extractedQuantity = Number(updateButton.parentElement.querySelector('.quantity-label select').value);
+                console.log(extractedQuantity);
+                // quantityLabel.innerHTML =  extractedQuantity;
+                cartItems[index].quantity = extractedQuantity;
+                saveToStorage();
+                renderCart();
+            }
+        })
+    })
     
 };
 

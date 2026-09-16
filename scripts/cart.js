@@ -17,16 +17,16 @@ export function saveToStorage(){
   localStorage.setItem('cartItems', JSON.stringify(cartItems));
 }
 
-export function addToCart(pId){
+export function addToCart(pId, quantity){
   const matchingItem = cartItems.find((item) => {
       return item.productId === pId;
   });
   
   if(matchingItem){
-      matchingItem.quantity+=1;
+      matchingItem.quantity+=quantity;
   }
   else{
-      cartItems.push({productId: pId, quantity: 1, deliveryOptionId: '1'});
+      cartItems.push({productId: pId, quantity: quantity, deliveryOptionId: '1'});
   }
   
     saveToStorage();
